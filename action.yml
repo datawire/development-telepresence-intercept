@@ -1,0 +1,17 @@
+name: 'Telepresence Intercept'
+description: 'Intercepts a service in a remote cluster'
+runs:
+  using: "composite"
+  steps:
+    - name: Install Telepresence
+      shell: bash
+      run: |
+        sudo curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o /usr/local/bin/telepresence
+        sudo chmod a+x /usr/local/bin/telepresence
+    - name: Connect Telepresence
+      shell: bash
+      run: telepresence login --apikey=${TELEPRESENCE_APY_KEY}
+    - name: Intercept the service
+      shell: bash
+      run: telepresence intercept voting --port 8081
+
