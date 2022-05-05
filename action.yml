@@ -24,7 +24,7 @@ runs:
     - name: Create kubeconfig file
       shell: bash
       run: |
-        cat <<EOF > /opt/kubeconfig
+        cat <<EOF > ~/.kube/config
         ${{ inputs.kubeconfig_file }}
         EOF
     - name: Connect Telepresence
@@ -32,5 +32,5 @@ runs:
       run: telepresence login --apikey=${{inputs.telepresence_api_key}}
     - name: Intercept the service
       shell: bash
-      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador --kubeconfig /opt/kubeconfig
+      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador --kubeconfig ~/.kube/config
 
