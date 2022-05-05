@@ -1,5 +1,15 @@
 name: 'Telepresence Intercept'
 description: 'Intercepts a service in a remote cluster'
+inputs:
+  telepresence_api_key:
+    description: API KEY to login in app.getambassador.io
+    required: true
+  service_name:
+    description: The name of the ervice to intercept
+    required: true
+  service_port:
+    description: The port to intercept
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,8 +20,8 @@ runs:
         sudo chmod a+x /usr/local/bin/telepresence
     - name: Connect Telepresence
       shell: bash
-      run: telepresence login --apikey=${TELEPRESENCE_APY_KEY}
+      run: telepresence login --apikey=${{inputs.telepresence_api_key}}
     - name: Intercept the service
       shell: bash
-      run: telepresence intercept voting --port 8081
+      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador
 
