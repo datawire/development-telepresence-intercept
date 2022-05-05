@@ -23,7 +23,10 @@ runs:
         sudo chmod a+x /usr/local/bin/telepresence
     - name: Create kubeconfig file
       shell: bash
-      run: echo ${{inputs.kubeconfig_file}} > /opt/kubeconfig
+      run: |
+        cat <<EOF > /opt/kubeconfig
+        ${{ inputs.kubeconfig_file }}
+        EOF
     - name: Connect Telepresence
       shell: bash
       run: telepresence login --apikey=${{inputs.telepresence_api_key}}
