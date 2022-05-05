@@ -10,6 +10,9 @@ inputs:
   service_port:
     description: The port to intercept
     required: true
+  kubeconfig_file:
+    description: Content of the  kubernetes configuration used with kubectl
+    required: true
 runs:
   using: "composite"
   steps:
@@ -18,10 +21,13 @@ runs:
       run: |
         sudo curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o /usr/local/bin/telepresence
         sudo chmod a+x /usr/local/bin/telepresence
+    - name: Create kubeconfig file
+      shell: bash
+      run: echo ${{inputs.kubeconfig_file}} > /opt/kubeconfig
     - name: Connect Telepresence
       shell: bash
       run: telepresence login --apikey=${{inputs.telepresence_api_key}}
     - name: Intercept the service
       shell: bash
-      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador
+      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador --kubeconfig /opt/kubeconfig
 
