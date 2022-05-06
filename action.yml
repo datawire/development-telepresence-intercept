@@ -20,7 +20,7 @@ inputs:
   http_header:
     description: Only intercept traffic that matches this "HTTP2_HEADER=REGEXP" specifier
     required: false
-    default: "x-telepresence-intercept-id: service-intercepted"
+    default: "x-telepresence-intercept-id=service-intercepted"
 runs:
   using: "composite"
   steps:
