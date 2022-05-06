@@ -17,6 +17,10 @@ inputs:
     description: The namespace of the service to intercept
     required: false
     default: default
+  http_header:
+    description: Only intercept traffic that matches this "HTTP2_HEADER=REGEXP" specifier
+    required: false
+    default: "x-telepresence-intercept-id: service-intercepted"
 runs:
   using: "composite"
   steps:
@@ -37,5 +41,5 @@ runs:
       run: telepresence login --apikey=${{inputs.telepresence_api_key}}
     - name: Intercept the service
       shell: bash
-      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador -n ${{inputs.namespace}}
+      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador -n ${{inputs.namespace}} --http-header=${{inputs.http_header}}
 
