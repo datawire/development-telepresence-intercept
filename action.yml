@@ -77,4 +77,8 @@ runs:
         service_port: ${{inputs.service_port}}
         namespace: ${{inputs.namespace}}
         http_header: ${{inputs.http_header}}
-        env_dile: ${{inputs.env_file}}
+        env_file: ${{inputs.env_file}}
+        ingress_host: ${{inputs.ingress_host}}
+        ingress_port: ${{inputs.ingress_port}}
+        ingress_tls: ${{inputs.ingress_tls}}
+        ingress_l5: ${{inputs.ingress_l5}}
