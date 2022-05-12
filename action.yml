@@ -31,6 +31,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: datawire/development-telepresence-intercept
+        path: './development-telepresence-intercept'
     - name: Install Telepresence
       shell: bash
       run: |
