@@ -44,7 +44,7 @@ runs:
         EOF
         echo "KUBECONFIG=/opt/kubeconfig" >> $GITHUB_ENV
     - name: Connect Telepresence
-      uses: ./login/
+      uses: ./development-telepresence-intercept/login/
       with:
         telepresence_api_key: ${{inputs.telepresence_api_key}}
     - name: Define parameters

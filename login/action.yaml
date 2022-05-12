@@ -6,5 +6,5 @@ inputs:
     required: true
 runs:
   using: 'node16'
-  main: 'development-telepresence-intercept/login/login.js'
-  post: 'development-telepresence-intercept/login/logout.js'
+  main: 'login.js'
+  post: 'logout.js'
