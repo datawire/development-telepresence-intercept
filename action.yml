@@ -40,8 +40,9 @@ runs:
         EOF
         echo "KUBECONFIG=/opt/kubeconfig" >> $GITHUB_ENV
     - name: Connect Telepresence
-      shell: bash
-      run: telepresence login --apikey=${{inputs.telepresence_api_key}}
+      uses: ./login/
+      with:
+        telepresence_api_key: ${{inputs.telepresence_api_key}}
     - name: Define parameters
       shell: bash
       if: "${{ inputs.env_file != '' }}"

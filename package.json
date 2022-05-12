@@ -1,0 +1,25 @@
+{
+  "name": "development-telepresence-intercept",
+  "version": "1.0.0",
+  "description": "This is a test for the telepresence intercept action",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datawire/development-telepresence-intercept.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/datawire/development-telepresence-intercept/issues"
+  },
+  "homepage": "https://github.com/datawire/development-telepresence-intercept#readme",
+  "dependencies": {
+    "@actions/core": "^1.8.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.0.1"
+  }
+}
