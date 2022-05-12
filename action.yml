@@ -71,9 +71,10 @@ runs:
       run: |
         echo "PARAMETERS=${{env.PARAMETERS}} -e ${{ inputs.env_file }}" >> $GITHUB_ENV
     - name: Intercept the service
-      uses: ./development-telepresence-intercept/login/
+      uses: ./development-telepresence-intercept/intercept/
       with:
         service_name: ${{inputs.service_name}}
         service_port: ${{inputs.service_port}}
         namespace: ${{inputs.namespace}}
         http_header: ${{inputs.http_header}}
+        env_dile: ${{inputs.env_file}}
