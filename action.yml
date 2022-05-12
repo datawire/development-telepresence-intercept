@@ -24,6 +24,21 @@ inputs:
   env_file:
     description: Emit the remote environment to an env file in Docker Compose format
     required: false
+  ingress_host:
+    description: This value will be used as the ingress hostname
+    required: false
+    default: ambassador.ambassador
+  ingress_port:
+    description: This value will be used as the ingress port
+    required: false
+    default: '80'
+  ingress_tls:
+    description: This flag will determine if TLS is used, and will default to false.
+    required: false
+  ingress_l5:
+    description: This flag will default to the ingress-host value.
+    required: false
+    default: ambassador.ambassador
 runs:
   using: "composite"
   steps:
@@ -56,6 +71,9 @@ runs:
       run: |
         echo "PARAMETERS=${{env.PARAMETERS}} -e ${{ inputs.env_file }}" >> $GITHUB_ENV
     - name: Intercept the service
-      shell: bash
-      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador -n ${{inputs.namespace}} --http-header=${{inputs.http_header}} ${{env.PARAMETERS}}
-
+      uses: ./development-telepresence-intercept/login/
+      with:
+        service_name: ${{inputs.service_name}}
+        service_port: ${{inputs.service_port}}
+        namespace: ${{inputs.namespace}}
+        http_header: ${{inputs.http_header}}
