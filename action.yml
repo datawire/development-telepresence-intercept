@@ -21,6 +21,9 @@ inputs:
     description: Only intercept traffic that matches this "HTTP2_HEADER=REGEXP" specifier
     required: false
     default: "x-telepresence-intercept-id=service-intercepted"
+  env_file:
+    description: Emit the remote environment to an env file in Docker Compose format
+    required: false
 runs:
   using: "composite"
   steps:
@@ -39,7 +42,12 @@ runs:
     - name: Connect Telepresence
       shell: bash
       run: telepresence login --apikey=${{inputs.telepresence_api_key}}
+    - name: Define parameters
+      shell: bash
+      if: "${{ inputs.env_file != '' }}"
+      run: |
+        echo "PARAMETERS=${{env.PARAMETERS}} -e ${{ inputs.env_file }}" >> $GITHUB_ENV
     - name: Intercept the service
       shell: bash
-      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador -n ${{inputs.namespace}} --http-header=${{inputs.http_header}}
+      run: telepresence intercept ${{inputs.service_name}} --port ${{inputs.service_port}} --ingress-host ambassador.ambassador --ingress-port 80 --ingress-tls --ingress-l5 ambassador.ambassador -n ${{inputs.namespace}} --http-header=${{inputs.http_header}} ${{env.PARAMETERS}}
 
