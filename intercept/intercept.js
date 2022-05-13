@@ -12,9 +12,13 @@ const telepresenceIntercept = async function(){
         const ingress_port = core.getInput('ingress_port');
         const ingress_tls = core.getInput('ingress_tls');
         const ingress_l5 = core.getInput('ingress_l5');
-        await exec.exec('telepresence', ['intercept', service_name, '--port', service_port, '--ingress-host', ingress_host,
-            '--ingress-port', ingress_port, '--ingress-l5', ingress_l5, '-n', namespace,
-            `--http-header=${http_header}`]);
+        const parameters = ['intercept', service_name, '--port', service_port, '--ingress-host', ingress_host,
+            '--ingress-port', ingress_port, '--ingress-l5', ingress_l5, '-n', namespace, `--http-header=${http_header}`];
+        if (env_file && env_file.length !== 0)
+            parameters.push(`-e ${env_file}`);
+        if (ingress_tls)
+            parameters.push('--ingress-tls')
+        await exec.exec('telepresence', parameters);
     } catch (error) {
         core.setFailed(error.message);
     }
