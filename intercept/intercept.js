@@ -15,7 +15,7 @@ const telepresenceIntercept = async function(){
         const parameters = ['intercept', service_name, '--port', service_port, '--ingress-host', ingress_host,
             '--ingress-port', ingress_port, '--ingress-l5', ingress_l5, '-n', namespace, `--http-header=${http_header}`];
         if (env_file && env_file.length !== 0){
-            await exec.exec('touch', [env_file]);
+            await exec.exec(`echo '' > ${env_file}`);
             parameters.push(`-e ${env_file}`);
         }
         if (ingress_tls)
