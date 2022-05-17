@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/datawire/development-telepresence-intercept#readme",
   "dependencies": {
+    "@actions/cache": "^2.0.4",
     "@actions/core": "^1.8.0",
     "@actions/exec": "^1.1.1",
-    "@actions/github": "^5.0.1"
+    "@actions/github": "^5.0.1",
+    "@actions/tool-cache": "^2.0.1"
   }
 }

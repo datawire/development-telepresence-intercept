@@ -48,10 +48,9 @@ runs:
         repository: datawire/development-telepresence-intercept
         path: './development-telepresence-intercept'
     - name: Install Telepresence
-      shell: bash
-      run: |
-        sudo curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o /usr/local/bin/telepresence
-        sudo chmod a+x /usr/local/bin/telepresence
+      uses: ./development-telepresence-intercept/install/
+      with:
+        version: '2.5.8'
     - name: Create kubeconfig file
       shell: bash
       run: |
