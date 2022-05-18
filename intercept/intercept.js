@@ -22,7 +22,8 @@ const telepresenceIntercept = async function(){
             parameters.push('--ingress-tls')
         await exec.exec('telepresence', parameters);
     } catch (error) {
-        core.setFailed(error.message);
+        await exec.exec('cat', ['/home/runner/.cache/telepresence/logs/daemon.log'])
+        core.setFailed(`There was an error intercepting the service: ${error.message}`);
     }
 }
 
