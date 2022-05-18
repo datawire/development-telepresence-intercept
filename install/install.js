@@ -30,13 +30,14 @@ const unixInstall = async function (version) {
 
 const telepresenceInstall = async function () {
     try {
+        const version = core.getInput('version')
         switch (process.platform) {
             case "win32":
-                await windowsInstall();
+                await windowsInstall(version);
                 break;
             case "linux":
             case "darwin":
-                await unixInstall();
+                await unixInstall(version);
                 break;
             default:
                 core.setFailed("Invalid runner platform");
