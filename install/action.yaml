@@ -2,9 +2,9 @@ name: 'Telepresence Install'
 description: 'Installs an specific version of telepresence'
 inputs:
   version:
-    description: 'Version of Telepresence to Install'
+    description: Version of Telepresence to Install
     required: false
-    default: 'latest'
+    default: latest
 runs:
   using: 'node16'
   main: 'install.js'
