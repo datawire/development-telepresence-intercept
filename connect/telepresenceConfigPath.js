@@ -1,4 +1,4 @@
-export default getTelepresenceConfigPath = () => {
+const getTelepresenceConfigPath = () => {
     switch (process.platform) {
         case "darwin":
             return `$HOME/Library/Application\\ Support/telepresence/`;

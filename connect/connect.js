@@ -10,7 +10,7 @@ const artifactOptions = {
 
 const telepresenceConnect = async function () {
     const telepresenceIdArtifact = core.getInput("telepresence-id-artifact");
-    const path = getTelepresenceConfigPath();
+    const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
 
     await artifactClient.downloadArtifact(telepresenceIdArtifact, path, artifactOptions);
 
