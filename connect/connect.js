@@ -12,7 +12,11 @@ const telepresenceConnect = async function () {
     const telepresenceIdArtifact = core.getInput("telepresence-id-artifact");
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
 
-    await artifactClient.downloadArtifact(telepresenceIdArtifact, path, artifactOptions);
+    try {
+        await artifactClient.downloadArtifact(telepresenceIdArtifact, path, artifactOptions);
+    } catch (error) {
+        core.warning("Unable to find any artifact associated to this workflow");
+    }
 
     try {
         await exec.exec('telepresence', ['connect']);
