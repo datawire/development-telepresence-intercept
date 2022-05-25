@@ -19,6 +19,13 @@ const telepresenceConnect = async function () {
     try {
         await io.mkdirP(path);
         await artifactClient.downloadArtifact(telepresenceIdArtifact, path, artifactOptions);
+        const downloadResponse = await artifactClient.downloadAllArtifacts();
+
+        // output result
+        for (response in downloadResponse) {
+            console.log(response.artifactName);
+            console.log(response.downloadPath);
+        }
     } catch (error) {
         core.warning("Unable to find any artifact associated to this workflow");
     }
