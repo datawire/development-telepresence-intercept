@@ -8,6 +8,9 @@ const artifactClient = artifact.create();
 const artifactOptions = {
     createArtifactFolder: true,
 };
+const artifactOptionsUpload = {
+    continueOnError: true
+}
 
 const telepresenceConnect = async function () {
     const telepresenceIdArtifact = core.getInput("telepresence-id-artifact");
@@ -27,7 +30,7 @@ const telepresenceConnect = async function () {
     }
 
     const files = [`${telepresenceConfigPath}/id`];
-    const uploadResponse = await artifactClient.uploadArtifact(telepresenceIdArtifact, files, telepresenceConfigPath, artifactOptions);
+    const uploadResponse = await artifactClient.uploadArtifact(telepresenceIdArtifact, files, path, artifactOptionsUpload);
     uploadResponse.failedItems.forEach(itemFailed => {
         core.warning(`It was not possible to save the file: ${itemFailed}`);
     });
