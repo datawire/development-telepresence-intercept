@@ -23,8 +23,8 @@ const telepresenceConnect = async function () {
 
         // output result
         for (response in downloadResponse) {
-            console.log(response.artifactName);
-            console.log(response.downloadPath);
+            core.info(response.artifactName);
+            core.ingo(response.downloadPath);
         }
     } catch (error) {
         core.warning("Unable to find any artifact associated to this workflow");
