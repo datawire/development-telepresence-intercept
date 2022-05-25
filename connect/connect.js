@@ -6,7 +6,7 @@ const getTelepresenceConfigPath = require('./telepresenceConfigPath');
 
 const artifactClient = artifact.create();
 const artifactOptions = {
-    createArtifactFolder: true,
+    createArtifactFolder: false,
 };
 const artifactOptionsUpload = {
     continueOnError: true
@@ -17,9 +17,9 @@ const telepresenceConnect = async function () {
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
 
     try {
+        await io.mkdirP(path);
         await artifactClient.downloadArtifact(telepresenceIdArtifact, path, artifactOptions);
     } catch (error) {
-        await io.mkdirP(path);
         core.warning("Unable to find any artifact associated to this workflow");
     }
 
