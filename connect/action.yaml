@@ -12,5 +12,5 @@ runs:
       uses: ./development-telepresence-intercept/connect/connectjs
       with:
         github-repository: ${{github.repository}}
-        telepresence-id: ${{secrets.TELEPRESENCE_ID_ACTION}}
+        telepresence-id: ${{secrets.TELEPRESENCE_ID_ACTION:''}}
 
