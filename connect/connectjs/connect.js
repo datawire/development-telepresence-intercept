@@ -4,7 +4,7 @@ const exec = require('@actions/exec');
 const artifact = require('@actions/artifact');
 const secrets = require('../src/secrets/index');
 const fs = require('fs');
-const getTelepresenceConfigPath = require('./telepresenceConfigPath');
+const getTelepresenceConfigPath = require('../telepresenceConfigPath');
 
 const artifactClient = artifact.create();
 const artifactOptions = {

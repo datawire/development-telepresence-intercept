@@ -1,19 +1,16 @@
 name: 'Telepresence Connect'
-description: 'Telepresence connects to a remote cluster'
-inputs:
-  telepresence-id-artifact:
-    description: The name of the artifact to save the telepresence configuration
-    required: false
-    default: telepresence-config
-  telepresence-id:
-    description: The Telepresence ID
-    required: false
-    default: ${{secrets.TELEPRESENCE_ID_ACTION}}
-  github-repository:
-    description: The Github repository
-    required: false
-    default: ${{github.repository}}
+description: 'Connects to a remote cluster'
 runs:
-  using: 'node16'
-  main: 'connect.js'
-  post: 'disconnect.js'
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        repository: datawire/development-telepresence-intercept
+        path: './development-telepresence-intercept/connect'
+    - name: Connect to remote cluster
+      uses: ./development-telepresence-intercept/connect/connectjs
+      with:
+        github-repository: ${{github.repository}}
+        telepresence-id: ${{secrets.TELEPRESENCE_ID_ACTION}}
+

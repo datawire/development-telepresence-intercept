@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const exec = require('@actions/exec');
 const secrets = require('../src/secrets/index');
-const telepresenceConfigPath = require('./telepresenceConfigPath');
+const telepresenceConfigPath = require('../telepresenceConfigPath');
 const fs = require('fs');
 
 
