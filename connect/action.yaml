@@ -5,6 +5,14 @@ inputs:
     description: The name of the artifact to save the telepresence configuration
     required: false
     default: telepresence-config
+  telepresence-id:
+    description: The Telepresence ID
+    required: false
+    default: ${{secrets.TELEPRESENCE_ID_ACTION}}
+  github-repository:
+    description: The Github repository
+    required: false
+    default: ${{github.repository}}
 runs:
   using: 'node16'
   main: 'connect.js'
