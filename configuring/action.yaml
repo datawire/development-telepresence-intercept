@@ -1,6 +1,5 @@
-name: 'Telepresence Connect'
-description: 'Telepresence connects to a remote cluster'
+name: 'Configuring telepresence'
+description: 'This action shoudl runs on the main branch to configure properly telepresence'
 runs:
   using: 'node16'
-  main: 'connect.js'
-  post: 'disconnect.js'
+  main: 'configure.js'
