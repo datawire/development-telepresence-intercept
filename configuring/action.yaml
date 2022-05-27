@@ -1,5 +1,10 @@
 name: 'Configuring telepresence'
 description: 'This action shoudl runs on the main branch to configure properly telepresence'
+inputs:
+  version:
+    description: The version of telepresence to configure
+    required: true
+    default: latest
 runs:
   using: 'node16'
   main: 'configure.js'
