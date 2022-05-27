@@ -11,7 +11,7 @@ const telepresenceDisconnect = async function () {
         if (core.getState(telepresenceConfigPath.TELEPRESENCE_ID_STATE) ===
             telepresenceConfigPath.TELEPRESENCE_ID_SAVES) {
             const path = telepresenceConfigPath.getTelepresenceConfigPath();
-            const cacheid = await toolCache.cacheDir(`${path}`, 'telepresenceID', '1.0');
+            const cacheid = await toolCache.cacheFile(`${path}/id`, 'id', 'telepresenceID', '1.0');
             core.info(`Telepresence ID cached with ${cacheid}`);
         }
     } catch (error) {
