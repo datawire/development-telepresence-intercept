@@ -1,10 +1,6 @@
 name: 'Telepresence Connect'
 description: 'Telepresence connects to a remote cluster'
 inputs:
-  telepresence-id-artifact:
-    description: The name of the artifact to save the telepresence configuration
-    required: false
-    default: telepresence-config
   telepresence-id:
     description: The Telepresence ID
     required: false
