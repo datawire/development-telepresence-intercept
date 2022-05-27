@@ -11,4 +11,4 @@ inputs:
 runs:
   using: 'node16'
   main: 'distConnect/index.js'
-  post: 'disconnect.js'
+  post: 'distDisconnect/index.js'

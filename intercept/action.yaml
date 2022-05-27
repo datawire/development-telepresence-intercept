@@ -35,5 +35,5 @@ inputs:
     default: ambassador.ambassador
 runs:
   using: 'node16'
-  main: 'intercept.js'
-  post: 'leave.js'
+  main: 'distIntercept/index|.js'
+  post: 'distLeave/index.js'
