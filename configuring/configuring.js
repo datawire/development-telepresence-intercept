@@ -2,12 +2,12 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
 const getTelepresenceConfigPath = require('../src/path/telepresenceConfigPath');
-const install = require('../src/install/index');
+const installTelepresence = require('../src/install/index');
 const cache = require('@actions/cache');
 
 const telepresenceConfiguring = async function () {
     //install telepresence
-    install.telepresenceInstall();
+    installTelepresence.telepresenceInstall();
 
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
     const restorePath = [path];
