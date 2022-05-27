@@ -2,11 +2,11 @@ const core = require('@actions/core');
 const toolCache = require('@actions/tool-cache');
 const exec = require('@actions/exec');
 
-exports.windowsInstall = async function (version) {
+const windowsInstall = async function (version) {
     core.setFailed('Not implemented for use with Windows runners');
 };
 
-exports.unixInstall = async function (version) {
+const unixInstall = async function (version) {
     const TELEPRESENCE_PATH = '/opt/telepresence/bin';
     const TELEPRESENCE_DOWNLOAD_URL = process.platform === 'darwin' ?
         `https://app.getambassador.io/download/tel2/darwin/amd64/${version}/telepresence` :
@@ -27,16 +27,17 @@ exports.unixInstall = async function (version) {
         core.addPath(telepresenceBinary);
     }
 };
+
 exports.telepresenceInstall = async function () {
     try {
         const version = core.getInput('version')
         switch (process.platform) {
             case "win32":
-                await install.windowsInstall(version);
+                await windowsInstall(version);
                 break;
             case "linux":
             case "darwin":
-                await install.unixInstall(version);
+                await unixInstall(version);
                 break;
             default:
                 core.setFailed("Invalid runner platform");
@@ -45,3 +46,6 @@ exports.telepresenceInstall = async function () {
         core.setFailed(error.message);
     }
 };
+
+exports.unixInstall = unixInstall;
+
