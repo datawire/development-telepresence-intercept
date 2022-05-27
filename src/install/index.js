@@ -24,8 +24,8 @@ const unixInstall = async function (version) {
         }
     } else {
         core.addPath(telepresenceBinary);
-        await exec.exec("chmod", ['a+x', `${TELEPRESENCE_PATH}/telepresence`]);
     }
+    await exec.exec("chmod", ['a+x', `${TELEPRESENCE_PATH}/telepresence`]);
 };
 
 exports.telepresenceInstall = async function () {
