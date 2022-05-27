@@ -4,8 +4,6 @@ const io = require('@actions/io');
 const cache = require('@actions/cache');
 const getTelepresenceConfigPath = require('./telepresenceConfigPath');
 
-const TELEPRESENCE_CACHE_KEY = 'telepresence_cache_key';
-
 const telepresenceConnect = async function () {
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
     const restorePath = [path];
@@ -13,7 +11,7 @@ const telepresenceConnect = async function () {
     try {
         await io.mkdirP(path);
         const cacheRestored = await cache.restoreCache(restorePath,
-            TELEPRESENCE_CACHE_KEY);
+            getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY);
         if (!cacheRestored)
             throw new Error('Unable to find a cache stored');
     } catch (error) {

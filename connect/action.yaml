@@ -1,10 +1,5 @@
 name: 'Telepresence Connect'
 description: 'Telepresence connects to a remote cluster'
-inputs:
-  github-repository:
-    description: The Github repository
-    required: false
-    default: ${{github.repository}}
 runs:
   using: 'node16'
   main: 'connect.js'
