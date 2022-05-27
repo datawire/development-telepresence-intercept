@@ -5,10 +5,11 @@ const getTelepresenceConfigPath = require('../src/path/telepresenceConfigPath');
 const installTelepresence = require('../src/install/index');
 const cache = require('@actions/cache');
 
+const TP_PATH = '/opt/telepresence/bin';
+
 const telepresenceConfiguring = async function () {
     //install telepresence
     installTelepresence.telepresenceInstall();
-    core.addPath('/opt/telepresence/bin');
 
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
     const restorePath = [path];
@@ -20,8 +21,7 @@ const telepresenceConfiguring = async function () {
         core.warning(`Unable to find the telepresence id: ${error}`);
     }
     try {
-        await exec.exec('telepresence', ['version']);
-        await exec.exec('telepresence', ['connect']);
+        await exec.exec(`${TP_PATH}/telepresence`, ['connect']);
     } catch (error) {
         core.setFailed(error.message);
         return;
