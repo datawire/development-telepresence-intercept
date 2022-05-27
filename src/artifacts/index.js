@@ -1,6 +1,6 @@
 const github = require('@actions/github');
-const toolCache = require('@actions/tool-cache');
-
+const core = require('@actions/core');
+const AdmZip = require('adm-zip')
 const PAGE_SIZE = 100;
 
 exports.getRepositoryArtifacts = async (artifactName, githubToken, repoName, repoOwner) => {
@@ -10,6 +10,8 @@ exports.getRepositoryArtifacts = async (artifactName, githubToken, repoName, rep
     const artifacts = [];
 
     let response = await octokit.rest.actions.listArtifactsForRepo({owner: repoOwner, repo: repoName, per_page: PAGE_SIZE, page: pageNumber});
+
+    core.info(response);
 
     artifacts.concat(response.artifacts);
 
@@ -25,8 +27,14 @@ exports.getRepositoryArtifacts = async (artifactName, githubToken, repoName, rep
             const dateB = new Date(artifactB.updated_at);
             return dateA.getTime() < dateB.getTime();
         })?.at(0);
-    response = await octokit.rest.actions.downloadArtifact({owner: repoOwner, repo: repoName, artifact_id: artifactToDownload.id, archive_format: 'zip'});
-    const location = response.Headers.Location;
-    toolCache.downloadTool(location, '');
-    toolCache.extractZip('', '');
+
+    const zipArtifact = octokit.actions.downloadArtifact({
+        owner: repoOwner,
+        repo: repoName,
+        artifact_id: artifactToDownload.id,
+        archive_format: 'zip',
+    });
+
+    const adm = new AdmZip(Buffer.from(zipArtifact.data));
+    adm.extractAllTo(dir, true);
 };
