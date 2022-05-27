@@ -14,6 +14,7 @@ const unixInstall = async function (version) {
 
     const telepresenceBinary = toolCache.find('telepresence', version);
 
+    core.info(TELEPRESENCE_DOWNLOAD_URL);
     if (!telepresenceBinary) {
         try {
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
@@ -31,6 +32,7 @@ const unixInstall = async function (version) {
 exports.telepresenceInstall = async function () {
     try {
         const version = core.getInput('version');
+        core.info(version);
         switch (process.platform) {
             case "win32":
                 await windowsInstall(version);
