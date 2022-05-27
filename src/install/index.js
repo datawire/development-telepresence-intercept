@@ -30,7 +30,7 @@ const unixInstall = async function (version) {
 
 exports.telepresenceInstall = async function () {
     try {
-        const version = core.getInput('version')
+        const version = core.getInput('version');
         switch (process.platform) {
             case "win32":
                 await windowsInstall(version);
