@@ -8,8 +8,7 @@ const cache = require('@actions/cache');
 const TP_PATH = '/opt/telepresence/bin';
 
 const telepresenceConfiguring = async function () {
-    //install telepresence
-    installTelepresence.telepresenceInstall();
+    await installTelepresence.telepresenceInstall();
 
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
     const restorePath = [path];
