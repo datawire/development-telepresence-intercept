@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const io = require('@actions/io');
-const getTelepresenceConfigPath = require('../src/path/telepresenceConfigPath');
-const installTelepresence = require('../src/install/index');
+const getTelepresenceConfigPath = require('./telepresenceConfigPath');
+const installTelepresence = require('./install');
 const cache = require('@actions/cache');
 
 const telepresenceConfiguring = async function () {
