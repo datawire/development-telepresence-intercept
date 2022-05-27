@@ -8,7 +8,6 @@ inputs:
   telepresence-id:
     description: The Telepresence ID
     required: false
-    default: ${{secrets.TELEPRESENCE_ID_ACTION}}
   github-repository:
     description: The Github repository
     required: false
