@@ -1,14 +1,11 @@
 name: 'Telepresence Connect'
 description: 'Telepresence connects to a remote cluster'
 inputs:
-  telepresence-id:
-    description: The Telepresence ID
-    required: false
   github-repository:
     description: The Github repository
     required: false
     default: ${{github.repository}}
 runs:
   using: 'node16'
-  main: 'distConnect/index.js'
-  post: 'distDisconnect/index.js'
+  main: 'connect.js'
+  post: 'disconnect.js'

@@ -1,23 +1,26 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const secrets = require('../src/secrets/index');
-const fs = require('fs');
+const io = require('@actions/io');
+const cache = require('@actions/cache');
 const getTelepresenceConfigPath = require('./telepresenceConfigPath');
+
+const TELEPRESENCE_CACHE_KEY = 'telepresence_cache_key';
 
 const telepresenceConnect = async function () {
     const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
-    const telepresenceID = core.getInput('telepresence-id');
-    if (!telepresenceID || telepresenceID === '') {
-        core.saveState(secrets.TELEPRESENCE_ID_STATE, secrets.SAVES_TELEPRESENCE_ID);
-        core.warning('Unable to get a previous telepresence id.');
-    } else {
-        try {
-            fs.writeFileSync(`${path}/id`, telepresenceIDSecret);
-        } catch (err) {
-            core.warning(err);
-        }
-    }
+    const restorePath = [path];
 
+    try {
+        await io.mkdirP(path);
+        const cacheRestored = await cache.restoreCache(restorePath,
+            TELEPRESENCE_CACHE_KEY);
+        if (!cacheRestored)
+            throw new Error('Unable to find a cache stored');
+    } catch (error) {
+        core.saveState(getTelepresenceConfigPath.TELEPRESENCE_ID_STATE,
+            getTelepresenceConfigPath.TELEPRESENCE_ID_SAVES);
+        core.warning(`Unable to find the telepresence id: ${error}`);
+    }
     try {
         await exec.exec('telepresence', ['connect']);
     } catch (error) {

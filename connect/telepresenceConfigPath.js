@@ -9,3 +9,7 @@ exports.getTelepresenceConfigPath = () => {
             return None;
     }
 };
+
+exports.TELEPRESENCE_ID_STATE = 'telepresence-id-state';
+exports.TELEPRESENCE_ID_SAVES = 'telepresence-saves';
+exports.TELEPRESENCE_ID_SAVED = 'telepresence-saved';
