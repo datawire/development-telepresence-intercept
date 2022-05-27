@@ -14,11 +14,9 @@ const unixInstall = async function (version) {
 
     const telepresenceBinary = toolCache.find('telepresence', version);
 
-    core.info(TELEPRESENCE_DOWNLOAD_URL);
     if (!telepresenceBinary) {
         try {
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
-            await exec.exec("chmod", ['a+x', `${TELEPRESENCE_PATH}/telepresence`]);
             const cachedPath = await toolCache.cacheFile(`${TELEPRESENCE_PATH}/telepresence`, 'telepresence', 'telepresence', version);
             core.addPath(cachedPath);
         } catch (e) {
@@ -26,13 +24,13 @@ const unixInstall = async function (version) {
         }
     } else {
         core.addPath(telepresenceBinary);
+        await exec.exec("chmod", ['a+x', `${TELEPRESENCE_PATH}/telepresence`]);
     }
 };
 
 exports.telepresenceInstall = async function () {
     try {
         const version = core.getInput('version');
-        core.info(version);
         switch (process.platform) {
             case "win32":
                 await windowsInstall(version);
@@ -48,6 +46,4 @@ exports.telepresenceInstall = async function () {
         core.setFailed(error.message);
     }
 };
-
-exports.unixInstall = unixInstall;
 
