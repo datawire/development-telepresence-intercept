@@ -3,7 +3,7 @@ const exec = require('@actions/exec');
 const configure = require('../src/configure');
 
 const telepresenceIntercept = async function () {
-    !configure.validateId() && await configure.getConfiguration();
+    if (!configure.validateId()) await configure.getConfiguration();
     try {
         const service_name = core.getInput('service_name');
         const service_port = core.getInput('service_port');
