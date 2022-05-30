@@ -6,7 +6,7 @@ const getTelepresenceConfigPath = require('../path/telepresenceConfigPath');
 const VALIDATE_ID_STATE = 'validated-telepresence-id';
 const VALIDATED_ID = 'validated';
 
-const getConfiguration = () => {
+const getConfiguration = async () => {
     try {
         await io.mkdirP(path);
         const cacheid = await cache.restoreCache([path], getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY,)
@@ -18,7 +18,7 @@ const getConfiguration = () => {
     }
 };
 
-const validateId = () => {
+const validateId = async () => {
     const isValidated = core.getState(VALIDATE_ID_STATE);
     return isValidated === VALIDATED_ID;
 }
