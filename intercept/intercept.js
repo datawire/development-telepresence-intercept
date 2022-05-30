@@ -1,7 +1,9 @@
 const core = require('@actions/core')
 const exec = require('@actions/exec');
+const configure = require('../src/configure');
 
-const telepresenceIntercept = async function(){
+const telepresenceIntercept = async function () {
+    !configure.validateId() && configure.getConfiguration();
     try {
         const service_name = core.getInput('service_name');
         const service_port = core.getInput('service_port');
@@ -14,7 +16,7 @@ const telepresenceIntercept = async function(){
         const ingress_l5 = core.getInput('ingress_l5');
         const parameters = ['intercept', service_name, '--port', service_port, '--ingress-host', ingress_host,
             '--ingress-port', ingress_port, '--ingress-l5', ingress_l5, '-n', namespace, `--http-header=${http_header}`];
-        if (env_file && env_file.length !== 0){
+        if (env_file && env_file.length !== 0) {
             parameters.push('-e');
             parameters.push(env_file);
         }

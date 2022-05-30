@@ -1,20 +1,9 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const io = require('@actions/io');
-const cache = require('@actions/cache');
-const getTelepresenceConfigPath = require('../src/path/telepresenceConfigPath');
+const configure = require('../src/configure');
 
 const telepresenceConnect = async function () {
-    const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
-
-    try {
-        await io.mkdirP(path);
-        const cacheid = await cache.restoreCache([path], getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY,)
-        if (!cacheid)
-            throw new Error('Unable to find a telepresence install id stored');
-    } catch (error) {
-        core.setFailed(error);
-    }
+    !configure.validateId() && configure.getConfiguration();
     try {
         await exec.exec('telepresence', ['connect']);
     } catch (error) {
