@@ -7,6 +7,7 @@ const VALIDATE_ID_STATE = 'validated-telepresence-id';
 const VALIDATED_ID = 'validated';
 
 const getConfiguration = async () => {
+    const path = getTelepresenceConfigPath.getTelepresenceConfigPath();
     try {
         await io.mkdirP(path);
         const cacheid = await cache.restoreCache([path], getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY,)
