@@ -9,7 +9,7 @@ const telepresenceConnect = async function () {
 
     try {
         await io.mkdirP(path);
-        const cacheid = cache.restoreCache([paths], getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY)
+        const cacheid = cache.restoreCache([path], getTelepresenceConfigPath.TELEPRESENCE_CACHE_KEY)
         if (!cacheid)
             throw new Error('Unable to find a telepresence install id stored');
     } catch (error) {
