@@ -19,6 +19,7 @@ const unixInstall = async function (version) {
             core.info("getting the telepresence binary");
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
             const cachedPath = await toolCache.cacheDir(`${TELEPRESENCE_PATH}`, 'telepresence', version);
+            core.info(`cached dir new:${telepresenceBinary}`);
             core.addPath(cachedPath);
         } catch (e) {
             core.setFailed(`There was a problem getting the telepresence binary: ${e}`)
