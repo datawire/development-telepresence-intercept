@@ -13,7 +13,7 @@ const unixInstall = async function (version) {
         `https://app.getambassador.io/download/tel2/linux/amd64/${version}/telepresence`;
 
     const telepresenceBinary = toolCache.find('telepresence', version);
-
+    core.info(`cached dir:${telepresenceBinary}`);
     if (!telepresenceBinary) {
         try {
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
