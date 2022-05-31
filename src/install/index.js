@@ -14,8 +14,9 @@ const unixInstall = async function (version) {
 
     const telepresenceBinary = toolCache.find('telepresence', version);
     core.info(`cached dir:${telepresenceBinary}`);
-    if (!telepresenceBinary) {
+    if (!telepresenceBinary || telepresenceBinary === '') {
         try {
+            core.info("getting the telepresence binary");
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
             const cachedPath = await toolCache.cacheDir(`${TELEPRESENCE_PATH}`, 'telepresence', version);
             core.addPath(cachedPath);
