@@ -20,7 +20,7 @@ const telepresenceConfiguring = async function () {
         core.warning(`Unable to find the telepresence id: ${error}`);
     }
     try {
-        await exec.exec(`${TP_PATH}/telepresence`, ['connect']);
+        await exec.exec(`telepresence`, ['connect']);
     } catch (error) {
         core.setFailed(error.message);
         return;
