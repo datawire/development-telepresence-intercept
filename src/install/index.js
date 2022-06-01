@@ -18,7 +18,7 @@ const unixInstall = async function (version) {
     const tpCacheId = await cache.restoreCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
 
     core.info(`tp cache id: ${tpCacheId}`);
-    if (!tpCacheId && tpCacheId === '') {
+    if (!tpCacheId || tpCacheId === '') {
         try {
             core.info('getting a new telepresence binary');
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
