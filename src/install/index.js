@@ -1,6 +1,9 @@
 const core = require('@actions/core');
 const toolCache = require('@actions/tool-cache');
 const exec = require('@actions/exec');
+const cache = require('@actions/cache');
+
+const TP_INSTALL_CACHE_KEY = 'telepresence_install_cache_id';
 
 const windowsInstall = async function (version) {
     core.setFailed('Not implemented for use with Windows runners');
@@ -12,21 +15,19 @@ const unixInstall = async function (version) {
         `https://app.getambassador.io/download/tel2/darwin/amd64/${version}/telepresence` :
         `https://app.getambassador.io/download/tel2/linux/amd64/${version}/telepresence`;
 
-    const telepresenceBinary = toolCache.find('telepresence', version);
-    core.info(`cached dir:${telepresenceBinary}`);
-    if (!telepresenceBinary || telepresenceBinary === '') {
+    const tpCacheId = cache.restoreCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
+
+    if (!tpCacheId) {
         try {
-            core.info("getting the telepresence binary");
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
-            const cachedPath = await toolCache.cacheDir(`${TELEPRESENCE_PATH}`, 'telepresence', version);
-            core.info(`cached dir new:${telepresenceBinary}`);
-            core.addPath(cachedPath);
+            const cacheid = cache.saveCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
+            if (!cacheid)
+                core.setFailed('There was a problem saving the telepresence binary');
         } catch (e) {
             core.setFailed(`There was a problem getting the telepresence binary: ${e}`)
         }
-    } else {
-        core.addPath(telepresenceBinary);
     }
+    core.addPath(TELEPRESENCE_PATH);
     await exec.exec("chmod", ['a+x', `${TELEPRESENCE_PATH}/telepresence`]);
 };
 
