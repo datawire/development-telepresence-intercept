@@ -15,14 +15,14 @@ const unixInstall = async function (version) {
         `https://app.getambassador.io/download/tel2/darwin/amd64/${version}/telepresence` :
         `https://app.getambassador.io/download/tel2/linux/amd64/${version}/telepresence`;
 
-    const tpCacheId = cache.restoreCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
+    const tpCacheId = await cache.restoreCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
 
     core.info(`tp cache id: ${tpCacheId}`);
     if (!tpCacheId && tpCacheId === '') {
         try {
             core.info('getting a new telepresence binary');
             await toolCache.downloadTool(TELEPRESENCE_DOWNLOAD_URL, `${TELEPRESENCE_PATH}/telepresence`);
-            const cacheid = cache.saveCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
+            const cacheid = await cache.saveCache([TELEPRESENCE_PATH], TP_INSTALL_CACHE_KEY);
             if (!cacheid)
                 core.setFailed('There was a problem saving the telepresence binary');
         } catch (e) {
